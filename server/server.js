@@ -10,8 +10,12 @@ const app = express()
 const server = http.createServer(app)
 const io = socketIO(server)
 
-io.on('connection', () => {
+io.on('connection', (socket) => {
   console.log(`IO Connection`)
+
+  socket.on('createMessage', (data) => {
+    console.log(`Socket: createMessage`, data)
+  })
 })
 
 app.use(express.static(publicPath))
