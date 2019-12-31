@@ -15,6 +15,10 @@ io.on('connection', (socket) => {
 
   socket.on('createMessage', (data) => {
     console.log(`Socket: createMessage`, data)
+    socket.emit(`newMessage`, {
+      text: data.value,
+      date: new Date()
+    })
   })
 })
 
