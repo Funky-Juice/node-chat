@@ -10,15 +10,17 @@ const app = express()
 const server = http.createServer(app)
 const io = socketIO(server)
 
-io.on('connection', (socket) => {
-  console.log(`IO Connection`)
+const message = (name, text) => ({name, text})
 
-  socket.on('createMessage', (data) => {
-    console.log(`Socket: createMessage`, data)
-    socket.emit(`newMessage`, {
-      text: data.value,
-      date: new Date()
-    })
+io.on('connection', (socket) => {
+
+  socket.on('message: create', (data, callback) => {
+    if (!data) {
+      callback(`Message can't be empty`)
+    } else {
+      callback()
+      io.emit('message: new', message('Admin', data.text))
+    }
   })
 })
 
