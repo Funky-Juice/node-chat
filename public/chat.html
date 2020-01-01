@@ -14,8 +14,29 @@
 <div id="app">
   <div class="chat">
     <div class="chat-users collection">
-      <a class="colletion-item"></a>
+      <a
+        class="collection-item"
+        v-for="user in 3"
+        :class="{'active': user === 1}"
+      >
+        User {{user}}
+      </a>
     </div>
+
+    <div class="chat-messages">
+      <div class="message" v-for="m in 10" :class="{'owner': m === 3}">
+        <div class="message-content z-depth-1">
+          Message {{m}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="input-field">
+      <input type="text" placeholder="Type your message...">
+    </div>
+    <button class="btn">Send</button>
   </div>
 </div>
 
