@@ -41,6 +41,13 @@ io.on('connection', (socket) => {
       callback()
     }
   })
+
+  socket.on('disconnect', () => {
+    const user = users.remove(socket.id)
+    if (user) {
+      io.to(user.room).emit('message: new', message('Admin', `${user.name}, left chat.`))
+    }
+  })
 })
 
 app.use(express.static(publicPath))
