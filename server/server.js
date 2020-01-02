@@ -26,6 +26,7 @@ io.on('connection', (socket) => {
     users.remove(socket.id)
     users.add(socket.id, user.name, user.room)
 
+    io.to(user.room).emit('users: update', users.getByRoom(user.room))
     socket.emit('message: new', message('Admin', `Welcome, ${user.name}!`))
     socket.broadcast.to(user.room).emit('message: new', message('Admin', `${user.name} joined.`))
   })
@@ -46,6 +47,7 @@ io.on('connection', (socket) => {
     const user = users.remove(socket.id)
     if (user) {
       io.to(user.room).emit('message: new', message('Admin', `${user.name}, left chat.`))
+      io.to(user.room).emit('users: update', users.getByRoom(user.room))
     }
   })
 })
